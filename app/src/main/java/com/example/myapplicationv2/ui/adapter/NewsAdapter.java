@@ -2,13 +2,11 @@ package com.example.myapplicationv2.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.myapplicationv2.data.repository.remote.ClickerListenerCallBack;
+import com.example.myapplicationv2.data.repository.remote.AdapterItemClickListener;
 import com.example.myapplicationv2.databinding.ItemEmptyBinding;
 import com.example.myapplicationv2.databinding.ItemListBinding;
 import com.example.myapplicationv2.ui.adapter.holder.EmptyHolder;
@@ -16,14 +14,20 @@ import com.example.myapplicationv2.ui.adapter.holder.ListItemHolder;
 
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ClickerListenerCallBack {
+public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int TYPE_INCREASE = 1;
     public static final int TYPE_DECREASE = 2;
 
+    public ItemListBinding binding;
+
     List<News> items;
 
-    public NewsAdapter() {}
+    private AdapterItemClickListener listener;
+
+    public NewsAdapter(AdapterItemClickListener adapterItemClickListener) {
+        this.listener = adapterItemClickListener;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -34,7 +38,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             case TYPE_DECREASE:
                 ItemListBinding itemBinding =
                         ItemListBinding.inflate(inflater, parent, false);
-                return new ListItemHolder(itemBinding);
+                return new ListItemHolder(itemBinding, listener);
 
             default:
                 ItemEmptyBinding emptyBinding =
@@ -49,7 +53,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         if (holder instanceof ListItemHolder) {
             ((ListItemHolder) holder).bind((News) items.get(position));
         }
+
     }
+
 
     @Override
     public int getItemViewType(int position) {
