@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
 public interface BaseService {
-    @Headers({"Content-Type:application/json","authorization:apikey 6miu2byuDOz7qHZNJRXZHE:0R9r2DNIqkfE136vrnakwT"})
+    @Headers({"Content-Type:application/json","authorization:apikey 377GSqXQdTlywlZ1hFjYKQ:30ewgtaKqCu4HOcPuKtOs0"})
     @GET("getNews?country=tr&tag=general")
     Observable<NewsResponse> getNew();
 }
